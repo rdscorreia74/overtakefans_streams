@@ -52,7 +52,6 @@ def get_streams():
 
 def generate_m3u(streams):
     m3u_content = "#EXTM3U\n"
-    
     for title, stream_id in streams:
         stream_url = f"http://127.0.0.1:6878/ace/getstream?id={stream_id}"
         m3u_content += f'#EXTINF:-1 tvg-id="" tvg-name="{title}",{title}\n'
@@ -60,8 +59,6 @@ def generate_m3u(streams):
 
     with open("playlist.m3u", "w", encoding="utf-8") as f:
         f.write(m3u_content)
-    
-    print(f"Successfully generated playlist.m3u with {len(streams)} streams.")
 
 def generate_json(streams):
     channels = []
@@ -69,17 +66,25 @@ def generate_json(streams):
         channels.append({
             "name": title,
             "id": stream_id,
-            "url": f"acestream://{stream_id}",
-            "proxy_url": f"http://127.0.0.1:6878/ace/getstream?id={stream_id}"
+            "url": f"acestream://{stream_id}"
         })
 
-    # Save as a direct array list for Horus add-on compatibility
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(channels, f, indent=4, ensure_ascii=False)
+
+def generate_txt(streams):
+    # Formats plain text as TITLE\nID for Horus's "Find links" feature
+    txt_content = ""
+    for title, stream_id in streams:
+        txt_content += f"{title}\n{stream_id}\n"
+
+    with open("links.txt", "w", encoding="utf-8") as f:
+        f.write(txt_content)
     
-    print(f"Successfully generated data.json with {len(streams)} streams.")
+    print(f"Successfully generated files with {len(streams)} streams.")
 
 if __name__ == "__main__":
     streams = get_streams()
     generate_m3u(streams)
     generate_json(streams)
+    generate_txt(streams)
