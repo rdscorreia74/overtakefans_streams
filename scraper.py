@@ -19,34 +19,40 @@ def get_streams():
     soup = BeautifulSoup(response.text, 'html.parser')
     streams = []
 
-    for element in soup.find_all(string=re.compile(r'Server\s+\d+:', re.IGNORECASE)):
+    # Find all elements that match 'Server X:'
+    server_elements = soup.find_all(string=re.compile(r'Server\s+\d+:', re.IGNORECASE))
+
+    for element in server_elements:
         title = element.strip()
-        parent = element.parent
         found_hash = None
         
-        for _ in range(3):
-            if parent:
-                match = re.search(r'([a-fA-F0-9]{40})', parent.get_text())
-                if match:
-                    found_hash = match.group(1)
+        # Traverse parent container and local subtree to extract the precise hash for THIS server block
+        curr = element.parent
+        for _ in range(4):
+            if curr:
+                local_hashes = re.findall(r'([a-fA-F0-9]{40})', curr.get_text())
+                if local_hashes:
+                    found_hash = local_hashes[0]
                     break
-                parent = parent.parent
+                curr = curr.next_sibling or curr.parent
         
         if found_hash and (title, found_hash) not in streams:
             streams.append((title, found_hash))
 
+    # Fallback line-by-line parsing if structural DOM search misses any elements
     if not streams:
         text_content = soup.get_text(separator="\n")
-        lines = text_content.splitlines()
-        current_title = "F1 Stream"
-        for line in lines:
-            line = line.strip()
-            if line.startswith("Server "):
-                current_title = line
-            else:
-                match = re.search(r'^([a-fA-F0-9]{40})$', line)
-                if match:
-                    streams.append((current_title, match.group(1)))
+        lines = [line.strip() for line in text_content.splitlines() if line.strip()]
+        
+        for i, line in enumerate(lines):
+            if re.match(r'^Server\s+\d+:', line, re.IGNORECASE):
+                title = line
+                for j in range(1, 6):
+                    if i + j < len(lines):
+                        match = re.search(r'([a-fA-F0-9]{40})', lines[i + j])
+                        if match:
+                            streams.append((title, match.group(1)))
+                            break
 
     return streams
 
@@ -73,15 +79,15 @@ def generate_json(streams):
         json.dump(channels, f, indent=4, ensure_ascii=False)
 
 def generate_txt(streams):
-    # Formats plain text as TITLE\nID for Horus's "Find links" feature
     txt_content = ""
     for title, stream_id in streams:
-        txt_content += f"{title}\n{stream_id}\n"
+        # Include 'acestream://' prefix so Horus "Find links" regex parses all streams properly
+        txt_content += f"{title}\nacestream://{stream_id}\n\n"
 
     with open("links.txt", "w", encoding="utf-8") as f:
         f.write(txt_content)
     
-    print(f"Successfully generated files with {len(streams)} streams.")
+    print(f"Successfully generated files with {len(streams)} unique streams.")
 
 if __name__ == "__main__":
     streams = get_streams()
