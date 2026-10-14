@@ -1,9 +1,12 @@
-name: Update Acestream Playlist
+name: Update Acestream Playlist and JSON
 
 on:
   schedule:
-    - cron: '0 */6 * * *' # Runs every 6 hours (adjust as needed, e.g., more frequently on race weekends)
-  workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
+    # Run every 1 hour on Fridays, Saturdays, and Sundays (UTC)
+    - cron: '0 * * * 5,6,0'
+    # Run every 3 hours on Mondays, Tuesdays, Wednesdays, and Thursdays (UTC)
+    - cron: '0 */3 * * 1,2,3,4'
+  workflow_dispatch: # Allows manual run from the GitHub Actions tab
 
 permissions:
   contents: write
@@ -11,6 +14,8 @@ permissions:
 jobs:
   update-playlist:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --no-deprecation # Suppresses Node.js deprecation warnings in runner logs
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -28,9 +33,9 @@ jobs:
       - name: Run scraper
         run: python scraper.py
 
-      - name: Commit and push if playlist changed
+      - name: Commit and push if files changed
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add playlist.m3u
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update F1 playlist [skip ci]" && git push)
+          git add playlist.m3u data.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update playlist and json data [skip ci]" && git push)
