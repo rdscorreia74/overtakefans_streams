@@ -1,4 +1,4 @@
-name: Update Acestream Playlist, JSON, and Text Files
+name: Update Acestream Playlist and JSON
 
 on:
   schedule:
@@ -37,5 +37,5 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add playlist.m3u data.json links.txt
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update playlist, json, and txt data [skip ci]" && git push)
+          git add playlist.m3u data.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update playlist and json data [skip ci]" && git push)
