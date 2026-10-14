@@ -59,7 +59,8 @@ def get_streams():
 def generate_m3u(streams):
     m3u_content = "#EXTM3U\n"
     for title, stream_id in streams:
-        stream_url = f"http://127.0.0.1:6878/ace/getstream?id={stream_id}"
+        # Using native acestream:// scheme for compatibility with Kodi PVR & Ace Stream Engine
+        stream_url = f"acestream://{stream_id}"
         m3u_content += f'#EXTINF:-1 tvg-id="" tvg-name="{title}",{title}\n'
         m3u_content += f"{stream_url}\n"
 
@@ -77,20 +78,10 @@ def generate_json(streams):
 
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(channels, f, indent=4, ensure_ascii=False)
-
-def generate_txt(streams):
-    txt_content = ""
-    for title, stream_id in streams:
-        # Include 'acestream://' prefix so Horus "Find links" regex parses all streams properly
-        txt_content += f"{title}\nacestream://{stream_id}\n\n"
-
-    with open("links.txt", "w", encoding="utf-8") as f:
-        f.write(txt_content)
-    
-    print(f"Successfully generated files with {len(streams)} unique streams.")
+        
+    print(f"Successfully generated playlist.m3u and data.json with {len(streams)} unique streams.")
 
 if __name__ == "__main__":
     streams = get_streams()
     generate_m3u(streams)
     generate_json(streams)
-    generate_txt(streams)
