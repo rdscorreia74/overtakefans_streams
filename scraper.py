@@ -67,19 +67,15 @@ def generate_json(streams):
     channels = []
     for title, stream_id in streams:
         channels.append({
-            "title": title,
             "name": title,
             "id": stream_id,
             "url": f"acestream://{stream_id}",
             "proxy_url": f"http://127.0.0.1:6878/ace/getstream?id={stream_id}"
         })
-    
-    data = {
-        "channels": channels
-    }
 
+    # Save as a direct array list for Horus add-on compatibility
     with open("data.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4, ensure_ascii=False)
+        json.dump(channels, f, indent=4, ensure_ascii=False)
     
     print(f"Successfully generated data.json with {len(streams)} streams.")
 
