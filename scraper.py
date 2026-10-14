@@ -1,5 +1,6 @@
 import os
 import re
+import json
 import cloudscraper
 from bs4 import BeautifulSoup
 
@@ -18,21 +19,12 @@ def get_streams():
     soup = BeautifulSoup(response.text, 'html.parser')
     streams = []
 
-    # Find all text blocks or containers that match the pattern in the HTML structure
-    # Overtakefans typically wraps these in headings or text elements preceding the input/hash boxes
-    text_content = soup.get_text(separator="\n")
-    
-    # Alternatively, parse elements directly by looking for 'Server' headings
-    # Let's search the HTML elements for the specific headers and their nearby 40-char hashes
     for element in soup.find_all(string=re.compile(r'Server\s+\d+:', re.IGNORECASE)):
         title = element.strip()
-        
-        # Look around this element's parent container to find the 40-character hex hash
         parent = element.parent
         found_hash = None
         
-        # Check parents/siblings for a hash
-        for _ in range(3): # Go up a few levels to find the container box
+        for _ in range(3):
             if parent:
                 match = re.search(r'([a-fA-F0-9]{40})', parent.get_text())
                 if match:
@@ -43,8 +35,8 @@ def get_streams():
         if found_hash and (title, found_hash) not in streams:
             streams.append((title, found_hash))
 
-    # Fallback method if structural parsing misses any: scan line by line
     if not streams:
+        text_content = soup.get_text(separator="\n")
         lines = text_content.splitlines()
         current_title = "F1 Stream"
         for line in lines:
@@ -69,8 +61,29 @@ def generate_m3u(streams):
     with open("playlist.m3u", "w", encoding="utf-8") as f:
         f.write(m3u_content)
     
-    print(f"Successfully generated playlist.m3u with {len(streams)} streams with custom titles.")
+    print(f"Successfully generated playlist.m3u with {len(streams)} streams.")
+
+def generate_json(streams):
+    channels = []
+    for title, stream_id in streams:
+        channels.append({
+            "title": title,
+            "name": title,
+            "id": stream_id,
+            "url": f"acestream://{stream_id}",
+            "proxy_url": f"http://127.0.0.1:6878/ace/getstream?id={stream_id}"
+        })
+    
+    data = {
+        "channels": channels
+    }
+
+    with open("data.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
+    
+    print(f"Successfully generated data.json with {len(streams)} streams.")
 
 if __name__ == "__main__":
     streams = get_streams()
     generate_m3u(streams)
+    generate_json(streams)
