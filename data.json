@@ -1,1 +1,62 @@
-[]
+[
+    {
+        "name": "Server 1: F1TV FHD 1080p/50fps",
+        "id": "b3582a22d7454b00ced4fd96083319791446d2e4",
+        "url": "acestream://b3582a22d7454b00ced4fd96083319791446d2e4"
+    },
+    {
+        "name": "Server 2: F1TV HD 720p/50fps",
+        "id": "c4623ac9b6a055581729c3dff9111ebdcc2cfe99",
+        "url": "acestream://c4623ac9b6a055581729c3dff9111ebdcc2cfe99"
+    },
+    {
+        "name": "Server 3: BT Sport 1 [UK]",
+        "id": "efc60cfe5e3a349baa02bcc49f6647c21a9c3c5b",
+        "url": "acestream://efc60cfe5e3a349baa02bcc49f6647c21a9c3c5b"
+    },
+    {
+        "name": "Server 4: BT Sport / ESPN [UK]",
+        "id": "fc5089d8e1519872fdf951779ccbca913acc9bce",
+        "url": "acestream://fc5089d8e1519872fdf951779ccbca913acc9bce"
+    },
+    {
+        "name": "Server 5: BT Sport 3 [UK]",
+        "id": "5f966c123759de46dff29c379266b7a403452033",
+        "url": "acestream://5f966c123759de46dff29c379266b7a403452033"
+    },
+    {
+        "name": "Server 6: BT Sport 2 [UK]",
+        "id": "d63d8a57cf471394bfa9f619bbd68b01ae27a801",
+        "url": "acestream://d63d8a57cf471394bfa9f619bbd68b01ae27a801"
+    },
+    {
+        "name": "Server 7: DANZ Server 5",
+        "id": "f16d68fa5ff64f3894a45062ca28e4e66f142c6a",
+        "url": "acestream://f16d68fa5ff64f3894a45062ca28e4e66f142c6a"
+    },
+    {
+        "name": "Server 8: DANZ Server 4",
+        "id": "02be332ebead0484a5354fa25e97b6833b8b129e",
+        "url": "acestream://02be332ebead0484a5354fa25e97b6833b8b129e"
+    },
+    {
+        "name": "Server 9: DANZ Server 3",
+        "id": "895d08633bb22c2573281655cf3ca44de476cc73",
+        "url": "acestream://895d08633bb22c2573281655cf3ca44de476cc73"
+    },
+    {
+        "name": "Server 10: DANZ Server 2",
+        "id": "f8b0eae8fda973cf426311541d1668aa592f0a8c",
+        "url": "acestream://f8b0eae8fda973cf426311541d1668aa592f0a8c"
+    },
+    {
+        "name": "Server 11: DANZ Server 1",
+        "id": "dddff67edfa7061f643ec5ae0be110169850363d",
+        "url": "acestream://dddff67edfa7061f643ec5ae0be110169850363d"
+    },
+    {
+        "name": "Server 12: Sky Sport F1 [DE]",
+        "id": "b04372b9543d763bd2dbd2a1842d9723fd080076",
+        "url": "acestream://b04372b9543d763bd2dbd2a1842d9723fd080076"
+    }
+]
