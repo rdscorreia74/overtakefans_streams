@@ -1,13 +1,13 @@
 [
     {
         "name": "Server 1: F1TV FHD 1080p/50fps",
-        "id": "b3582a22d7454b00ced4fd96083319791446d2e4",
-        "url": "acestream://b3582a22d7454b00ced4fd96083319791446d2e4"
+        "id": "4e0fdef9a693bf78e35455ac93ba0588756293c9",
+        "url": "acestream://4e0fdef9a693bf78e35455ac93ba0588756293c9"
     },
     {
         "name": "Server 2: F1TV HD 720p/50fps",
-        "id": "c4623ac9b6a055581729c3dff9111ebdcc2cfe99",
-        "url": "acestream://c4623ac9b6a055581729c3dff9111ebdcc2cfe99"
+        "id": "77ed3dd3d4928e5a960138030e5c1d8eda357fd3",
+        "url": "acestream://77ed3dd3d4928e5a960138030e5c1d8eda357fd3"
     },
     {
         "name": "Server 3: BT Sport 1 [UK]",

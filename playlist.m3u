@@ -1,8 +1,8 @@
 #EXTM3U
 #EXTINF:-1 tvg-id="" tvg-name="Server 1: F1TV FHD 1080p/50fps",Server 1: F1TV FHD 1080p/50fps
-acestream://b3582a22d7454b00ced4fd96083319791446d2e4
+acestream://4e0fdef9a693bf78e35455ac93ba0588756293c9
 #EXTINF:-1 tvg-id="" tvg-name="Server 2: F1TV HD 720p/50fps",Server 2: F1TV HD 720p/50fps
-acestream://c4623ac9b6a055581729c3dff9111ebdcc2cfe99
+acestream://77ed3dd3d4928e5a960138030e5c1d8eda357fd3
 #EXTINF:-1 tvg-id="" tvg-name="Server 3: BT Sport 1 [UK]",Server 3: BT Sport 1 [UK]
 acestream://efc60cfe5e3a349baa02bcc49f6647c21a9c3c5b
 #EXTINF:-1 tvg-id="" tvg-name="Server 4: BT Sport / ESPN [UK]",Server 4: BT Sport / ESPN [UK]
